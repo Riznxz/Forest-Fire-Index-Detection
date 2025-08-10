@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Fire Weather Index Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1565c0;
+            --secondary-blue: #42a5f5;
+            --accent-orange: #ff9800;
+            --dark-orange: #f57c00;
+            --light-bg: rgba(255, 255, 255, 0.15);
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            background-attachment: fixed;
+        }
+        
+        .welcome-container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        .welcome-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .welcome-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        h1 {
+            font-weight: 800;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .title-highlight {
+            color: var(--accent-orange);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .title-highlight:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-orange);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        
+        .welcome-box:hover .title-highlight:after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        .lead-text {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .btn-custom {
+            background-color: var(--accent-orange);
+            color: white;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: none;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-custom:hover {
+            background-color: var(--dark-orange);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+        }
+        
+        .btn-custom i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn-custom:hover i {
+            transform: translateX(3px);
+        }
+        
+        .features-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 50px;
+            gap: 20px;
+        }
+        
+        .feature-card {
+            background: var(--light-bg);
+            padding: 25px;
+            border-radius: 15px;
+            width: 30%;
+            min-width: 250px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-orange);
+        }
+        
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .feature-text {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+        
+        .footer-text {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .welcome-box {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .lead-text {
+                font-size: 1.1rem;
+            }
+            
+            .feature-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <div class="welcome-box animate__animated animate__fadeIn">
+            <h1>Welcome to <span class="title-highlight">Fire Weather Index</span> Prediction</h1>
+            <p class="lead-text">
+                Our advanced AI-powered platform helps predict fire risks with unprecedented accuracy. 
+                Get real-time insights based on environmental data to protect communities and natural resources.
+            </p>
+            <a href="{{ url_for('predict_datapoint') }}" class="btn btn-custom mt-3">
+                Get Started <i class="fas fa-arrow-right"></i>
+            </a>
+            
+            <div class="features-container">
+                <div class="feature-card animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="feature-title">AI-Powered Predictions</h3>
+                    <p class="feature-text">
+                        Our machine learning models analyze multiple environmental factors to provide accurate fire risk assessments.
+                    </p>
+                </div>
+                
+                <div class="feature-card animate__animated animate__fadeInUp animate__delay-2s">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Real-Time Data</h3>
+                    <p class="feature-text">
+                        Get up-to-date predictions based on the latest weather and environmental conditions.
+                    </p>
+                </div>
+                
+                <div class="feature-card animate__animated animate__fadeInUp animate__delay-3s">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Preventive Insights</h3>
+                    <p class="feature-text">
+                        Proactively manage fire risks with actionable recommendations and early warnings.
+                    </p>
+                </div>
+            </div>
+            
+            <p class="footer-text">
+                Helping fire management professionals since 2023 | Powered by cutting-edge technology
+            </p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add smooth scrolling to all links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

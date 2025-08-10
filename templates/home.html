@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FWI Prediction - Algerian Dataset</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary-blue: #1565c0;
+            --dark-blue: #0d47a1;
+            --light-blue: #e3f2fd;
+            --accent-orange: #ff9800;
+            --form-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--light-blue), #ffffff);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            background-attachment: fixed;
+        }
+        
+        .form-container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: var(--form-shadow);
+            max-width: 700px;
+            margin: 30px auto;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .form-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        h2 {
+            color: var(--primary-blue);
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent-orange);
+            border-radius: 3px;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .form-control, .form-select {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.25rem rgba(21, 101, 192, 0.25);
+        }
+        
+        .input-group-text {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+        }
+        
+        .btn-custom {
+            background-color: var(--primary-blue);
+            color: white;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 15px rgba(21, 101, 192, 0.3);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        
+        .btn-custom:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(21, 101, 192, 0.4);
+        }
+        
+        .btn-custom i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn-custom:hover i {
+            transform: translateX(3px);
+        }
+        
+        .form-section {
+            margin-bottom: 25px;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        .form-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .form-header i {
+            margin-right: 10px;
+            color: var(--primary-blue);
+            font-size: 1.2rem;
+        }
+        
+        .form-header h3 {
+            color: var(--primary-blue);
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 25px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Add delay animations for form sections */
+        .form-section:nth-child(1) { animation-delay: 0.1s; }
+        .form-section:nth-child(2) { animation-delay: 0.2s; }
+        .form-section:nth-child(3) { animation-delay: 0.3s; }
+        .form-section:nth-child(4) { animation-delay: 0.4s; }
+        .form-section:nth-child(5) { animation-delay: 0.5s; }
+        .form-section:nth-child(6) { animation-delay: 0.6s; }
+        .form-section:nth-child(7) { animation-delay: 0.7s; }
+        .form-section:nth-child(8) { animation-delay: 0.8s; }
+        .form-section:nth-child(9) { animation-delay: 0.9s; }
+    </style>
+</head>
+<body>
+    <div class="form-container animate__animated animate__fadeIn">
+        <h2>Fire Weather Index Prediction</h2>
+        
+        <form action="{{ url_for('predict_datapoint') }}" method="POST">
+            <!-- Weather Parameters Section -->
+            <div class="form-section">
+                <div class="form-header">
+                    <i class="fas fa-cloud-sun"></i>
+                    <h3>Weather Parameters</h3>
+                </div>
+                <div class="form-row">
+                    <!-- Temperature -->
+                    <div class="mb-3">
+                        <label class="form-label">Temperature (°C)</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" name="Temperature" step="0.1" required>
+                            <span class="input-group-text"><i class="fas fa-temperature-high"></i></span>
+                        </div>
+                    </div>
+                    <!-- Relative Humidity -->
+                    <div class="mb-3">
+                        <label class="form-label">Relative Humidity (%)</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" name="RH" step="0.1" required>
+                            <span class="input-group-text"><i class="fas fa-tint"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <!-- Wind Speed -->
+                    <div class="mb-3">
+                        <label class="form-label">Wind Speed (km/h)</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" name="Ws" step="0.1" required>
+                            <span class="input-group-text"><i class="fas fa-wind"></i></span>
+                        </div>
+                    </div>
+                    <!-- Rain -->
+                    <div class="mb-3">
+                        <label class="form-label">Rain (mm)</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" name="Rain" step="0.1" required>
+                            <span class="input-group-text"><i class="fas fa-cloud-rain"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fire Indices Section -->
+            <div class="form-section">
+                <div class="form-header">
+                    <i class="fas fa-fire"></i>
+                    <h3>Fire Indices</h3>
+                </div>
+                <div class="form-row">
+                    <!-- FFMC -->
+                    <div class="mb-3">
+                        <label class="form-label">FFMC</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" name="FFMC" step="0.1" required>
+                            <span class="input-group-text">F</span>
+                        </div>
+                        <small class="text-muted">Fine Fuel Moisture Code</small>
+                    </div>
+                    <!-- DMC -->
+                    <div class="mb-3">
+                        <label class="form-label">DMC</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" name="DMC" step="0.1" required>
+                            <span class="input-group-text">D</span>
+                        </div>
+                        <small class="text-muted">Duff Moisture Code</small>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <!-- ISI -->
+                    <div class="mb-3">
+                        <label class="form-label">ISI</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" name="ISI" step="0.1" required>
+                            <span class="input-group-text">I</span>
+                        </div>
+                        <small class="text-muted">Initial Spread Index</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Additional Parameters Section -->
+            <div class="form-section">
+                <div class="form-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h3>Additional Parameters</h3>
+                </div>
+                <div class="form-row">
+                    <!-- Classes -->
+                    <div class="mb-3">
+                        <label class="form-label">Classes</label>
+                        <select class="form-select" name="Classes" required>
+                            <option value="">Select Class</option>
+                            <option value="1">0</option>
+                            <option value="0">1</option>
+                        </select>
+                        <small class="text-muted">Fire risk classification</small>
+                    </div>
+                    <!-- Region -->
+                    <div class="mb-3">
+                        <label class="form-label">Region</label>
+                        <select class="form-select" name="Region" required>
+                            <option value="">Select Region</option>
+                            <option value="1">1</option>
+                            <option value="2">0</option>
+                        </select>
+                        <small class="text-muted">Geographical region</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-custom animate__animated animate__pulse animate__infinite animate__slower">
+                    Predict FWI <i class="fas fa-chart-line"></i>
+                </button>
+            </div>
+        </form>
+        
+        <div class="form-footer">
+            <p>Accurate fire weather predictions for better forest management</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add input validation
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.validity.rangeUnderflow || this.validity.rangeOverflow) {
+                    this.setCustomValidity('Please enter a valid value');
+                } else {
+                    this.setCustomValidity('');
+                }
+            });
+        });
+        
+        // Add focus effects
+        document.querySelectorAll('.form-control, .form-select').forEach(element => {
+            element.addEventListener('focus', function() {
+                this.parentElement.classList.add('focus');
+            });
+            
+            element.addEventListener('blur', function() {
+                this.parentElement.classList.remove('focus');
+            });
+        });
+    </script>
+</body>
+</html>
