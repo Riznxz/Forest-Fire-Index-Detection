@@ -1,8 +1,8 @@
-# Algerian Forest Fire Prediction - Model Training
+# Algerian Forest Fire Prediction - Model Training & Flask UI
 
 ## 📌 Project Overview
 This project focuses on **predicting fire weather index (FWI)** for Algerian forest regions using **machine learning**.  
-We utilize the **Algerian Forest Fires Dataset** containing meteorological and fire weather parameters, perform **Exploratory Data Analysis (EDA)**, **Feature Engineering (FE)**, and train a **Ridge Regression model**.
+We utilize the **Algerian Forest Fires Dataset** containing meteorological and fire weather parameters, perform **Exploratory Data Analysis (EDA)**, **Feature Engineering (FE)**, train a **Ridge Regression model** ,Built a Flask web application so users can input weather data and get real-time predictions.
 ---
 
 ## 📊 Dataset
@@ -61,12 +61,18 @@ The dataset contains **daily weather and fire index measurements** from Algeria�
 
 ---
 
-### 8 📈 Results
+### 8️⃣ 📈 Results
 Best Model: Ridge Regression
 
 Achieved a high R² score indicating good predictive capability.
 
 Preprocessing and model pipeline saved for deployment.
+
+----
+
+
+### 9️⃣ Flask UI Prediction
+The trained Ridge Regression model is integrated into a Flask web application for real-time predictions.
 
 ----
 
