@@ -73,6 +73,7 @@ Preprocessing and model pipeline saved for deployment.
 
 ### 9️⃣ Flask UI Prediction
 The trained Ridge Regression model is integrated into a Flask web application for real-time predictions.
+[Link Text](http://127.0.0.1:5000/)
 
 ----
 
